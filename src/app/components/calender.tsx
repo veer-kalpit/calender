@@ -85,7 +85,7 @@ const Calendar: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl bg-black shadow-xl rounded-lg p-6">
+    <div className="w-full max-w-3xl bg-black shadow-xl rounded-lg p-6">
       <div className="flex justify-between items-center mb-6">
         <button
           className="bg-blue-600 text-white px-5 py-3 rounded-full hover:bg-blue-700 transition hover:scale-125"
@@ -93,7 +93,7 @@ const Calendar: React.FC = () => {
         >
           Previous
         </button>
-        <h2 className="text-3xl font-semibold text-white">
+        <h2 className="text-[16px] lg:text-[20px] font-semibold text-white">
           {currentMonth.format("MMMM YYYY")}
         </h2>
         <button
@@ -114,9 +114,12 @@ const Calendar: React.FC = () => {
         ))}
         {Array.from({ length: daysInMonth }).map((_, i) => {
           const day = i + 1;
+          const dateKey = currentMonth.date(day).format("YYYY-MM-DD");
+          const hasEvents = events[dateKey] && events[dateKey].length > 0;
           const isSelected = selectedDay === day;
           const isToday =
             dayjs().isSame(currentMonth, "month") && currentDay === day;
+
           return (
             <div
               key={i}
@@ -125,6 +128,8 @@ const Calendar: React.FC = () => {
                   ? "bg-blue-500 text-white"
                   : isToday
                   ? "bg-green-500 text-white"
+                  : hasEvents
+                  ? "bg-yellow-300 text-black hover:scale-110"
                   : "hover:scale-125"
               }`}
               onClick={() => handleDayClick(day)}
