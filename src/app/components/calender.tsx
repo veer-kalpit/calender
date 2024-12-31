@@ -245,6 +245,34 @@ const Calendar: React.FC = () => {
           }
         />
       </Modal>
+
+      {/* Color Usage Note */}
+      <div className="mt-5 text-gray-200">
+        <div className="flex flex-col space-y-3">
+          <div className="flex items-center">
+            <strong className="bg-blue-500 p-1 rounded-md"></strong>
+            <span className="ml-2">Selected Date</span>
+          </div>
+          <div className="flex items-center">
+            <strong className="bg-green-500 p-1 rounded-md"></strong>
+            <span className="ml-2">
+              This color is used to highlight the current day on the calendar.
+            </span>
+          </div>
+          <div className="flex items-center">
+            <strong className="bg-yellow-400 p-1 rounded-md"></strong>
+            <span className="ml-2">
+              This color is used for dates that have events.
+            </span>
+          </div>
+          <div className="flex items-center">
+            <strong className="bg-red-500 p-1 rounded-md"></strong>
+            <span className="ml-2">
+              This color is used for weekends (Saturday and Sunday).
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
