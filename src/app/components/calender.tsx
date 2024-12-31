@@ -95,7 +95,7 @@ const Calendar: React.FC = () => {
         >
           &#9664; Previous
         </button>
-        <h2 className="text-xl lg:text-2xl font-bold text-white tracking-wide">
+        <h2 className="text-[14px] lg:text-2xl font-bold text-white tracking-wide">
           {currentMonth.format("MMMM YYYY")}
         </h2>
         <button
@@ -131,7 +131,7 @@ const Calendar: React.FC = () => {
           return (
             <div
               key={i}
-              className={`border rounded-lg p-4 text-center cursor-pointer transition-transform duration-300 shadow-md 
+              className={`border rounded-lg p-2 text-center cursor-pointer transition-transform duration-300 shadow-md 
               ${isSelected ? "bg-blue-600 text-white scale-105" : ""} 
               ${isToday ? "bg-green-500 text-white" : ""} 
               ${
