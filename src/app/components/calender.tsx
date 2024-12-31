@@ -24,14 +24,12 @@ const Calendar: React.FC = () => {
     null
   );
 
-  // Set the modal app element in useEffect (only runs client-side)
   useEffect(() => {
     if (typeof window !== "undefined" && document.getElementById("root")) {
       Modal.setAppElement("#root");
     }
   }, []);
 
-  // Load events from localStorage when the component mounts
   useEffect(() => {
     const storedEvents = localStorage.getItem("calendarEvents");
     if (storedEvents) {
@@ -46,7 +44,7 @@ const Calendar: React.FC = () => {
 
   const daysInMonth = currentMonth.daysInMonth();
   const firstDayOfMonth = currentMonth.startOf("month").day();
-  const currentDay = dayjs().date(); // Current day in the month
+  const currentDay = dayjs().date();
 
   const handleDayClick = (day: number): void => {
     setSelectedDay(day);
@@ -63,7 +61,7 @@ const Calendar: React.FC = () => {
           ? events[dateKey].map((e, index) =>
               index === editingEventIndex ? event : e
             )
-          : [...(events[dateKey] || []), event], // Add or update event
+          : [...(events[dateKey] || []), event],
     };
     saveEvents(updatedEvents);
     setModalOpen(false);
@@ -117,15 +115,16 @@ const Calendar: React.FC = () => {
         {Array.from({ length: daysInMonth }).map((_, i) => {
           const day = i + 1;
           const isSelected = selectedDay === day;
-          const isToday = currentDay === day;
+          const isToday =
+            dayjs().isSame(currentMonth, "month") && currentDay === day;
           return (
             <div
               key={i}
               className={`border rounded-lg p-4 text-center cursor-pointer transition-transform duration-300 ${
                 isSelected
-                  ? "bg-blue-500 text-white" // Highlight selected day
+                  ? "bg-blue-500 text-white"
                   : isToday
-                  ? "bg-green-500 text-white" // Highlight current day
+                  ? "bg-green-500 text-white"
                   : "hover:scale-125"
               }`}
               onClick={() => handleDayClick(day)}
