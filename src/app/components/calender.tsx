@@ -41,7 +41,6 @@ const Calendar: React.FC = () => {
     localStorage.setItem("calendarEvents", JSON.stringify(updatedEvents));
   };
 
-
   const getDaysInMonth = (month: number, year: number): number => {
     return new Date(year, month + 1, 0).getDate();
   };
@@ -164,6 +163,17 @@ const Calendar: React.FC = () => {
             new Date().getFullYear() === currentMonth.getFullYear() &&
             new Date().getMonth() === currentMonth.getMonth() &&
             new Date().getDate() === day;
+          const isWeekend =
+            new Date(
+              currentMonth.getFullYear(),
+              currentMonth.getMonth(),
+              day
+            ).getDay() === 0 ||
+            new Date(
+              currentMonth.getFullYear(),
+              currentMonth.getMonth(),
+              day
+            ).getDay() === 6;
 
           return (
             <div
@@ -175,7 +185,8 @@ const Calendar: React.FC = () => {
                   hasEvents
                     ? "bg-yellow-400 text-black hover:scale-110"
                     : "hover:scale-105"
-                }`}
+                }
+                ${isWeekend ? "border-2 border-red-500" : ""}`} // Red border for weekends
               onClick={() => handleDayClick(day)}
             >
               {day}
