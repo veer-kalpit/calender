@@ -1,6 +1,17 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Calendar App
+```bash
+A simple and customizable calendar app built using React and TypeScript. This app allows users to manage events, add, update, and delete events for each day in the calendar. It supports modal dialogs for event creation and editing and stores events in `localStorage`.
 
-## Getting Started
+## Features
+
+- View a monthly calendar
+- Click on any day to add or edit events
+- Save events to `localStorage` so they persist across page reloads
+- Highlight the current day in green, selected day in blue, weekday in red and days with event in yellow
+- Add, edit, download and delete events with a user-friendly modal interface
+```
+
+# Getting Started
 
 First, run the development server:
 
@@ -16,21 +27,27 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- React
+- TypeScript
+- React Modal
+- Tailwind CSS (for styling)
 
-## Learn More
+## Setup
 
-To learn more about Next.js, take a look at the following resources:
+Follow these steps to set up the project locally:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Prerequisites
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Make sure you have the following installed:
 
-## Deploy on Vercel
+- Node.js (v18 or higher)
+- npm (or yarn)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 1. Clone the repository
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+git clone https://github.com/veer-kalpit/calender.git
+cd calendar
+```
