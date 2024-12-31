@@ -44,7 +44,8 @@ const Calendar: React.FC = () => {
 
   const daysInMonth = currentMonth.daysInMonth();
   const firstDayOfMonth = currentMonth.startOf("month").day();
-  const currentDay = dayjs().date();
+ 
+
 
   const handleDayClick = (day: number): void => {
     setSelectedDay(day);
@@ -85,30 +86,37 @@ const Calendar: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-3xl bg-black shadow-xl rounded-lg p-6">
-      <div className="flex justify-between items-center mb-6">
+    <div className="w-full max-w-3xl bg-gradient-to-br from-gray-900 via-gray-800 to-black shadow-2xl rounded-lg p-8">
+      {/* Header Navigation */}
+      <div className="flex justify-between items-center mb-8">
         <button
-          className="bg-blue-600 text-white px-5 py-3 rounded-full hover:bg-blue-700 transition hover:scale-125"
+          className="bg-blue-500 text-[14px] text-white px-6 py-3 rounded-full hover:bg-blue-600 transition transform hover:scale-110 shadow-md"
           onClick={() => setCurrentMonth(currentMonth.subtract(1, "month"))}
         >
-          Previous
+          &#9664; Previous
         </button>
-        <h2 className="text-[16px] lg:text-[20px] font-semibold text-white">
+        <h2 className="text-xl lg:text-2xl font-bold text-white tracking-wide">
           {currentMonth.format("MMMM YYYY")}
         </h2>
         <button
-          className="bg-blue-600 text-white px-5 py-3 rounded-full hover:bg-blue-700 transition hover:scale-125"
+          className="bg-blue-500 text-[14px] text-white px-6 py-3 rounded-full hover:bg-blue-600 transition transform hover:scale-110 shadow-md"
           onClick={() => setCurrentMonth(currentMonth.add(1, "month"))}
         >
-          Next
+          Next &#9654;
         </button>
       </div>
-      <div className="grid grid-cols-7 gap-4 text-center text-white">
+
+      {/* Days of the Week */}
+      <div className="grid grid-cols-7 gap-4 text-center text-gray-300 mb-4">
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day, i) => (
-          <div key={i} className="font-semibold text-lg">
+          <div key={i} className="font-semibold text-lg uppercase">
             {day}
           </div>
         ))}
+      </div>
+
+      {/* Calendar Days */}
+      <div className="grid grid-cols-7 gap-4">
         {Array.from({ length: firstDayOfMonth }).map((_, i) => (
           <div key={i} className="h-16"></div>
         ))}
@@ -118,19 +126,18 @@ const Calendar: React.FC = () => {
           const hasEvents = events[dateKey] && events[dateKey].length > 0;
           const isSelected = selectedDay === day;
           const isToday =
-            dayjs().isSame(currentMonth, "month") && currentDay === day;
+            dayjs().isSame(currentMonth, "month") && dayjs().date() === day;
 
           return (
             <div
               key={i}
-              className={`border rounded-lg p-4 text-center cursor-pointer transition-transform duration-300 ${
-                isSelected
-                  ? "bg-blue-500 text-white"
-                  : isToday
-                  ? "bg-green-500 text-white"
-                  : hasEvents
-                  ? "bg-yellow-300 text-black hover:scale-110"
-                  : "hover:scale-125"
+              className={`border rounded-lg p-4 text-center cursor-pointer transition-transform duration-300 shadow-md 
+              ${isSelected ? "bg-blue-600 text-white scale-105" : ""} 
+              ${isToday ? "bg-green-500 text-white" : ""} 
+              ${
+                hasEvents
+                  ? "bg-yellow-400 text-black hover:scale-110"
+                  : "hover:scale-105"
               }`}
               onClick={() => handleDayClick(day)}
             >
@@ -139,22 +146,30 @@ const Calendar: React.FC = () => {
           );
         })}
       </div>
-      {selectedDay && (
-        <EventList
-          events={
-            events[currentMonth.date(selectedDay).format("YYYY-MM-DD")] || []
-          }
-          onDelete={deleteEvent}
-          onEdit={editEvent}
-        />
-      )}
 
+      {/* Modal */}
       <Modal
         isOpen={modalOpen}
         onRequestClose={() => setModalOpen(false)}
-        className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto mt-24"
+        className="bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto mt-24"
         overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
       >
+        <h2 className="text-xl font-bold mb-6 text-gray-800">
+          Events for{" "}
+          {selectedDay
+            ? currentMonth.date(selectedDay).format("MMMM DD, YYYY")
+            : ""}
+        </h2>
+        {selectedDay && (
+          <EventList
+            events={
+              events[currentMonth.date(selectedDay).format("YYYY-MM-DD")] || []
+            }
+            onDelete={deleteEvent}
+            onEdit={editEvent}
+          />
+        )}
+        <hr className="my-6" />
         <EventForm
           selectedDay={
             selectedDay !== null

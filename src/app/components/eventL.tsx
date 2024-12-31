@@ -18,13 +18,15 @@ interface EventListProps {
 const EventList: React.FC<EventListProps> = ({ events, onDelete, onEdit }) => {
   return (
     <div className="mt-4">
-      <h3 className="text-lg font-bold mb-2">Events</h3>
       {events.length === 0 ? (
-        <p>No events for this day.</p>
+        <p className="text-black">No events for this day.</p>
       ) : (
         <ul>
           {events.map((event, index) => (
-            <li key={index} className="border-b py-2 flex justify-between">
+            <li
+              key={index}
+              className="border-b py-2 flex justify-between text-black"
+            >
               <span>
                 <strong>{event.name}</strong> ({event.startTime} -{" "}
                 {event.endTime})
