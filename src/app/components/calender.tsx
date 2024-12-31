@@ -46,6 +46,7 @@ const Calendar: React.FC = () => {
 
   const daysInMonth = currentMonth.daysInMonth();
   const firstDayOfMonth = currentMonth.startOf("month").day();
+  const currentDay = dayjs().date(); // Current day in the month
 
   const handleDayClick = (day: number): void => {
     setSelectedDay(day);
@@ -113,15 +114,26 @@ const Calendar: React.FC = () => {
         {Array.from({ length: firstDayOfMonth }).map((_, i) => (
           <div key={i} className="h-16"></div>
         ))}
-        {Array.from({ length: daysInMonth }).map((_, i) => (
-          <div
-            key={i}
-            className="border rounded-lg p-4 text-center cursor-pointer hover:scale-125 transition-transform duration-300"
-            onClick={() => handleDayClick(i + 1)}
-          >
-            {i + 1}
-          </div>
-        ))}
+        {Array.from({ length: daysInMonth }).map((_, i) => {
+          const day = i + 1;
+          const isSelected = selectedDay === day;
+          const isToday = currentDay === day;
+          return (
+            <div
+              key={i}
+              className={`border rounded-lg p-4 text-center cursor-pointer transition-transform duration-300 ${
+                isSelected
+                  ? "bg-blue-500 text-white" // Highlight selected day
+                  : isToday
+                  ? "bg-green-500 text-white" // Highlight current day
+                  : "hover:scale-125"
+              }`}
+              onClick={() => handleDayClick(day)}
+            >
+              {day}
+            </div>
+          );
+        })}
       </div>
       {selectedDay && (
         <EventList
