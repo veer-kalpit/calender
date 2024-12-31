@@ -51,3 +51,8 @@ Make sure you have the following installed:
 git clone https://github.com/veer-kalpit/calender.git
 cd calendar
 ```
+## Deployed Link
+
+```bash
+https://calendar-umber-eight.vercel.app/ 
+```
