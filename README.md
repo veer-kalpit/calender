@@ -1,9 +1,9 @@
 # Calendar App
-```bash
+
 A simple and customizable calendar app built using React and TypeScript. This app allows users to manage events, add, update, and delete events for each day in the calendar. It supports modal dialogs for event creation and editing and stores events in `localStorage`.
 
 ## Features
-
+```bash
 - View a monthly calendar
 - Click on any day to add or edit events
 - Save events to `localStorage` so they persist across page reloads
