@@ -20,6 +20,9 @@ const Calendar: React.FC = () => {
   const [events, setEvents] = useState<EventsMap>({});
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [editingEventIndex, setEditingEventIndex] = useState<number | null>(
+    null
+  );
 
   // Set the modal app element in useEffect (only runs client-side)
   useEffect(() => {
@@ -54,10 +57,16 @@ const Calendar: React.FC = () => {
     const dateKey = currentMonth.date(selectedDay).format("YYYY-MM-DD");
     const updatedEvents = {
       ...events,
-      [dateKey]: [...(events[dateKey] || []), event],
+      [dateKey]:
+        editingEventIndex !== null
+          ? events[dateKey].map((e, index) =>
+              index === editingEventIndex ? event : e
+            )
+          : [...(events[dateKey] || []), event], // Add or update event
     };
     saveEvents(updatedEvents);
     setModalOpen(false);
+    setEditingEventIndex(null);
   };
 
   const deleteEvent = (index: number): void => {
@@ -69,6 +78,11 @@ const Calendar: React.FC = () => {
       delete updatedEvents[dateKey];
     }
     saveEvents(updatedEvents);
+  };
+
+  const editEvent = (index: number): void => {
+    setEditingEventIndex(index);
+    setModalOpen(true);
   };
 
   return (
@@ -92,7 +106,7 @@ const Calendar: React.FC = () => {
       </div>
       <div className="grid grid-cols-7 gap-4 text-center text-white">
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day, i) => (
-          <div key={i} className="font-semibold text-lg  text-white">
+          <div key={i} className="font-semibold text-lg">
             {day}
           </div>
         ))}
@@ -115,8 +129,10 @@ const Calendar: React.FC = () => {
             events[currentMonth.date(selectedDay).format("YYYY-MM-DD")] || []
           }
           onDelete={deleteEvent}
+          onEdit={editEvent}
         />
       )}
+
       <Modal
         isOpen={modalOpen}
         onRequestClose={() => setModalOpen(false)}
@@ -131,6 +147,13 @@ const Calendar: React.FC = () => {
           }
           onSave={addOrUpdateEvent}
           onClose={() => setModalOpen(false)}
+          initialEvent={
+            editingEventIndex !== null
+              ? events[
+                  currentMonth.date(selectedDay ?? 1).format("YYYY-MM-DD")
+                ][editingEventIndex]
+              : undefined
+          }
         />
       </Modal>
     </div>
